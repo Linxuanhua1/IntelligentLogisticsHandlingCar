@@ -1,0 +1,60 @@
+
+[Unit]
+Description=auto_start_py
+
+[Service]
+ExecStart=/root/python_venv/bin/python3 /root/Pi/auto_start.py
+WorkingDirectory=/root/Pi/
+StandardOutput=journal
+StandardError=journal
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+指令：
+sudo systemctl enable auto_start_py.service
+sudo systemctl start auto_start_py.service
+
+sudo journalctl -u auto_start_py.service -f
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart auto_start_py.service
+
+sudo systemctl disable auto_start_py.service
+sudo systemctl stop auto_start_py.service
+
+
+
+[Unit]
+Description=auto_set_camera_index
+
+[Service]
+ExecStart=/root/python_venv/bin/python3 /root/Pi/auto_set_camera_index.py
+WorkingDirectory=/root/Pi/
+StandardOutput=journal
+StandardError=journal
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target
+
+
+指令：
+sudo systemctl enable auto_set_camera_index.service
+sudo systemctl start auto_set_camera_index.service
+
+sudo journalctl -u auto_set_camera_index.service -f
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart auto_set_camera_index.service
+
+sudo systemctl disable auto_set_camera_index.service
+sudo systemctl stop auto_set_camera_index.service
+
+

@@ -1,0 +1,20 @@
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+pip config set global.retries 1
+
+
+sudo nano /etc/udev/rules.d/99-my-custom.rules
+# 针对连接到 USB 端口 3-1 的摄像头（对应 Bus 003）
+SUBSYSTEM=="video4linux", ENV{ID_PATH}=="platform-xhci-hcd.1-usb-0:1:1.0", SYMLINK+="reco_camera"
+
+# 针对连接到 USB 端口 1-1 的摄像头（对应 Bus 001）
+SUBSYSTEM=="video4linux", ENV{ID_PATH}=="platform-xhci-hcd.0-usb-0:1:1.0", SYMLINK+="qr_camera"
+
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+ls -l /dev | grep camera
+
+udevadm info /dev/video0
+
+v4l2-ctl -d /dev/video0 --list-ctrls
+
+v4l2-ctl --list-devices
